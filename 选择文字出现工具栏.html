@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>js实现一个弹出框</title>
+    <style type="text/css">
+        #imgSinaShare{
+            position: fixed;
+        }
+    </style>
+
+</head>
+<body>
+<img id="imgSinaShare" class="img_sina_share" title="将选中内容分享到新浪微博" src="http://simg.sinajs.cn/blog7style/images/common/share.gif" />
+一、功能简述
+正是微博如火如荼的时节，其中各个微博的分享功能是网站推广产品的好东东啊，此时如何方便快捷的使用微博的分享功能就显得比较重要了。我的站点每篇文章的底部有一些分享的链接：
+文章底部的一些分享功能 张鑫旭-鑫空间-鑫生活
+
+不过我觉得这些分享基本上就是聋子的耳朵——摆设。除非这篇文章惊天地、泣鬼神，痛彻心扉，穿越前世今生。但是，如果有更加方便快捷的分享方式，这种冷淡得让人结冰的场面或许就不会经常出现。
+
+一般翻译软件都有划词翻译功能，例如有道桌面词典的桌面划词翻译功能：
+</body>
+<script>
+    var $sinaMiniBlogShare = function(eleShare, eleContainer) {
+        var eleTitle = document.getElementsByTagName("title")[0];
+        eleContainer = eleContainer || document;
+        var funGetSelectTxt = function() {
+            var txt = "";
+            if(document.selection) {
+                txt = document.selection.createRange().text;	// IE
+            } else {
+                txt = document.getSelection();
+            }
+            return txt.toString();
+        };
+        eleContainer.onmouseup = function(e) {
+            e = e || window.event;
+            var txt = funGetSelectTxt(), sh = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            var left = (e.clientX - 40 < 0) ? e.clientX + 20 : e.clientX - 40, top = (e.clientY - 40 < 0) ? e.clientY + sh + 20 : e.clientY + sh - 40;
+            if (txt) {
+                eleShare.style.display = "inline";
+                eleShare.style.left = left + "px";
+                eleShare.style.top = top + "px";
+            } else {
+                eleShare.style.display = "none";
+            }
+        };
+        eleShare.onclick = function() {
+            var txt = funGetSelectTxt(), title = (eleTitle && eleTitle.innerHTML)? eleTitle.innerHTML : "未命名页面";
+            if (txt) {
+                window.open('http://v.t.sina.com.cn/share/share.php?title=' + txt + '→来自页面"' + title + '"的文字片段&url=' + window.location.href);
+            }
+        };
+    };
+    $sinaMiniBlogShare(document.getElementById("imgSinaShare"));
+</script>
+</html>
