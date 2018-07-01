@@ -1,162 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            boder-sizing: border-box;
-        }
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no,address=no">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" >
+  <title>Title</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      boder-sizing: border-box;
+    }
 
-        .body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.42857143;
-            color: #333;
-            background-color: #fff;
-        }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      background-color: #fff;
+    }
 
-        /*弹框外层*/
-        .modal-open {
-            overflow: hidden; /*防止背景滚动*/
-        }
+    /*弹框外层*/
+    .modal-open {
+      overflow: hidden; /*防止背景滚动*/
+    }
 
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
-            z-index: 1050;
-        }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      z-index: 1050;
+    }
 
-        .modal.fade {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.15s linear;
-        }
+    .modal.fade {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.15s linear;
+    }
 
-        .modal.fade.in {
-            opacity: 1;
-        }
+    .modal.fade.in {
+      opacity: 1;
+    }
 
-        /*弹框内包裹节点*/
-        .modal-dialog {
-            position: relative;
-            width: auto;
-            margin: 10px;
-            transform: translate(0, -25%);
-            transition: transform 0.3s ease-out;
-        }
+    /*弹框内包裹节点*/
+    .modal-dialog {
+      position: relative;
+      width: auto;
+      margin: 10px;
+      transform: translate(0, -25%);
+      transition: transform 0.3s ease-out;
+    }
 
-        .modal.fade.in > .modal-dialog {
-            transform: translate(0, 0)
-        }
+    .modal.fade.in > .modal-dialog {
+      transform: translate(0, 0)
+    }
 
-        /*弹框内容节点*/
-        .modal-content {
-            position: relative;
-            background-color: #fff;
-            border-radius: 6px;
-            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-            background-clip: padding-box;
-            outline: 0;
-        }
+    /*弹框内容节点*/
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+      background-clip: padding-box;
+      outline: 0;
+    }
 
-        /*背景*/
-        .backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #000;
-            display: none;
-            z-index: 1040;
-        }
+    /*背景*/
+    .backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      display: none;
+      z-index: 1040;
+    }
 
-        .backdrop.fade {
-            opacity: 0;
-            transition: opacity .15s;
-        }
+    .backdrop.fade {
+      opacity: 0;
+      transition: opacity .15s;
+    }
 
-        .backdrop.in {
-            opacity: 0.5;
-        }
+    .backdrop.in {
+      opacity: 0.5;
+    }
 
-        /*内容样式 */
-        .modal-header {
-            padding: 15px;
-            border-bottom: 1px solid #e5e5e5
-        }
+    /*内容样式 */
+    .modal-header {
+      padding: 15px;
+      border-bottom: 1px solid #e5e5e5
+    }
 
-        .modal-body {
-            position: relative;
-            padding: 15px;
-            border-bottom: 1px solid #e5e5e5;
-        }
+    .modal-body {
+      position: relative;
+      padding: 15px;
+      border-bottom: 1px solid #e5e5e5;
+    }
 
-        .modal-footer {
-            text-align: right;
-            padding: 15px;
-        }
+    .modal-footer {
+      text-align: right;
+      padding: 15px;
+    }
 
-        .modal-footer > .btn + .btn {
-            margin-left: 10px;
-        }
+    .modal-footer > .btn + .btn {
+      margin-left: 10px;
+    }
 
-        .btn {
-            background-color: #fff;
-            outline: 0;
-            border-radius: 4px;
-            padding: 6px 12px;
-            display: inline-block;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: center;
-            touch-action: manipulation;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
+    .btn {
+      background-color: #fff;
+      outline: 0;
+      border-radius: 4px;
+      padding: 6px 12px;
+      display: inline-block;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: center;
+      touch-action: manipulation;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
 
-        .btn-default {
-            color: #333;
-            background-color: #fff;
-            border-color: #ccc;
-        }
+    .btn-default {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+    }
 
-        .btn-primary {
-            color: #fff;
-            background-color: #337ab7;
-            border-color: #2e6da4;
-        }
+    .btn-primary {
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4;
+    }
 
-    </style>
+  </style>
 </head>
 <body>
 <button class="btn" onclick="openModal()">点我创建</button>
 
 <!--modal 主体-->
 <div class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>
-                    模态框头部header
-                </h4>
-            </div>
-            <div class="modal-body">这里添加一些文本 modal body</div>
-            <div class="modal-footer">
-                <button class="btn btn-default" onclick="handleCloseModal()">关闭</button>
-                <button class="btn btn-primary">确认</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>
+          模态框头部header
+        </h4>
+      </div>
+      <div class="modal-body">这里添加一些文本 modal body</div>
+      <div class="modal-footer">
+        <button class="btn btn-default" onclick="handleCloseModal()">关闭</button>
+        <button class="btn btn-primary">确认</button>
+      </div>
     </div>
+  </div>
 </div>
 <!--backdrop 蒙层-->
 <script>

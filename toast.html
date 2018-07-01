@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no,address=no">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>toast 组件定义</title>
+</head>
+<style>
+ .toast {
+   position: fixed;
+   top: 20px;
+   transform: translateX(-408px);
+   font-size: 14px;
+   line-height: 1.5;
+   color: rgba(0, 0, 0, .65);
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   margin-right: 24px;
+   z-index: 1010;
+   width: 384px;
+   max-width: calc(100vw - 32px);
+   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+ }
+
+ .toast.in {
+   opacity: 1;
+   transform: translateX(0);
+ }
+
+ .toast.out {
+
+ }
+
+ .toast-content {
+   padding: 16px 24px;
+   border-radius: 4px;
+   -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+   box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+   background: #fff;
+   line-height: 1.5;
+   position: relative;
+   margin-bottom: 16px;
+ }
+</style>
+<body>
+  <!--<div class="toast">-->
+  <!--&lt;!&ndash;<span class="toast-content">hi , i am  toast</span>&ndash;&gt;-->
+  <!--</div>-->
+</body>
+  <script>
+     ((function (root, factory) {
+       if (typeof  module !== 'undefined' && module.exports) {
+         //require some css
+         module.exports = factory()
+       } else {
+         root.ToastConfig = factory()
+       }
+     })(window, function () {
+       //@param {}
+       var _ToastConfig = function (options) {
+         return new Toast(options)
+       }
+       var Toast = function (options) {
+         this.text = options.text
+         this.placement = options.placement || 'right'
+         this.parentNode = options.parentNode || document.body
+         this.duration = options.duration || 4000
+         this.count = 0
+       }
+       Toast.prototype.show = function () {
+         this.buildToastElement()
+       }
+       Toast.prototype.close = function (containerNode) {
+         var timer = setTimeout(function () {
+           containerNode && containerNode.classList.remove('in')
+           timer = null
+           timer = setTimeout(function () {
+             containerNode.parentNode.removeChild(containerNode)
+             timer = null
+           }, 800)
+         }, this.duration)
+       }
+       Toast.prototype.buildToastElement = function () {
+         ++this.count
+         //build toast container
+         var containerNode = document.createElement('div')
+         containerNode.className = 'toast'
+         //build toast content
+         var div = document.createElement('div')
+         div.innerText = this.text + this.count
+         div.className = 'toast-content'
+         containerNode.appendChild(div)
+         this.parentNode.insertBefore(containerNode, this.parentNode.firstChild)
+         this.rePosition()
+         var timer = setTimeout(function () {
+           containerNode.classList.add('in')
+           this.close(containerNode)
+           timer = null
+         }.bind(this), 0)
+       }
+       Toast.prototype.rePosition = function () {
+         var toastEles = document.getElementsByClassName('toast');
+         for (var i = 0, toastEle; toastEle = toastEles[i++];) {
+           toastEle.style.top = toastEle.offsetHeight * i + 20 + 'px';
+         }
+       }
+       return _ToastConfig
+     }))
+  </script>
+  <script>
+    var toa = ToastConfig({
+      text: 'hi, toast!',
+      duration: 4000
+    })
+  </script>
+</html>
