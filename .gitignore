@@ -1,0 +1,15 @@
+node_modules/
+.travis.yml
+*.swp
+.sass-cache/
+mods/.sass-cache/
+src/.pages/
+.DS_Store
+.idea
+.temp/
+temp/
+.DS_Store
+.npm-debug.log
+./npm-debug.log
+npm-debug.log
+build/

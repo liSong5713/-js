@@ -1,0 +1,22 @@
+{
+  "name": "-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liSong5713/-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liSong5713/-js/issues"
+  },
+  "homepage": "https://github.com/liSong5713/-js#readme",
+  "devDependencies": {
+    "jquery": "^3.3.1"
+  }
+}
