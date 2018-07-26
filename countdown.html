@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    /*
+* Tested on:
+* Chrome/38
+* Safari/8
+* iPad/8.1
+* Android Phone/4.4
+*/
+
+    html {
+      background-color: #191919;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .timer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      height: 200px;
+      /* change these to scale */
+
+      width: 200px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 100%;
+    }
+    .circle {
+      stroke: red;
+      fill: transparent;
+      stroke-dasharray: 100 100;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s;
+      transition-timing-function: linear;
+    }
+    .text {
+      fill: rgba(255, 255, 255, 0.7);
+      font-family: Helvetica, sans-serif;
+      font-size: 10px;
+      text-anchor: middle;
+    }
+  </style>
+</head>
+<body>
+
+<svg class="timer" viewBox="0 0 34 34">
+    <g>
+        <circle class="circle" cx="15" cy="17" r="15.9" transform="rotate(-90 16 16)"></circle>
+        <text class="text" x="17" y="20.5"></text>
+    </g>
+</svg>
+
+<script>
+  "use strict";
+  if (!Date.now) Date.now = function() {
+      return (new Date).getTime()
+  };
+  //for raf polyfill
+  (function() {
+      var n = ["webkit", "moz"];
+      for (var e = 0; e < n.length && !window.requestAnimationFrame; ++e) {
+          var i = n[e];
+          window.requestAnimationFrame = window[i + "RequestAnimationFrame"];
+          window.cancelAnimationFrame = window[i + "CancelAnimationFrame"] || window[i + "CancelRequestAnimationFrame"]
+      }
+      if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+          var a = 0;
+          window.requestAnimationFrame = function(n) {
+              var e = Date.now();
+              var i = Math.max(a + 16, e);
+              return setTimeout(function() {
+                  n(a = i)
+              }, i - e)
+          };
+          window.cancelAnimationFrame = clearTimeout
+      }
+  })();
+
+  // It's the final countdown!
+  (function(doc) {
+      var totalTime = 15,
+          currentTime = totalTime,
+          percentTime = null,
+          timerId = null,
+          timerText = doc.querySelector('.text'),
+          timerCircle = doc.querySelector('.circle');
+
+      timerId = function() {
+          if (currentTime === 0) {
+              return;
+          }
+          timerText.textContent = currentTime;
+
+          setTimeout(function() {
+              currentTime -= 1;
+              percentTime = Math.round((currentTime / totalTime) * 100);
+              timerText.textContent = currentTime;
+              timerCircle.style.strokeDashoffset = percentTime - 100;
+              requestAnimationFrame(timerId);
+          }, 1000);
+      }
+      timerId();
+  })(document);
+</script>
+</body>
+</html>

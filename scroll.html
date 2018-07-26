@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
-    .item{
+    .item {
       padding: 20px 25px;
       box-shadow: 0px 10px 30px #efefef, 0px -5px 15px #efefef;
       border-radius: 10px;
@@ -12,20 +13,21 @@
     }
   </style>
 </head>
+
 <body>
-<script>
-  /*mock*/
-  var arr = new Array(100).fill('ele')
-  var fragment = document.createDocumentFragment()
-  arr.forEach(function (item,index) {
-    var div = document.createElement('div')
-    div.innerHTML = 'item'+index
-    div.className = 'item'
-    fragment.appendChild(div)
-  })
-  document.body.appendChild(fragment)
-</script>
-<script>
+  <script>
+    /*mock*/
+    var arr = new Array(100).fill('ele')
+    var fragment = document.createDocumentFragment()
+    arr.forEach(function (item, index) {
+      var div = document.createElement('div')
+      div.innerHTML = 'item' + index
+      div.className = 'item'
+      fragment.appendChild(div)
+    })
+    document.body.appendChild(fragment)
+  </script>
+  <script>
     /*
     * 判断触底的实现
     * 原理 文档的高度= 可视窗口高度+滚动条的高度
@@ -68,11 +70,12 @@
       return scrollHeight;
     }
 
-    window.addEventListener('scroll',function () {
-      if(getScrollTop()+getWindowHeight() === getScrollHeight()){
+    window.addEventListener('scroll', function () {
+      if (getScrollTop() + getWindowHeight() === getScrollHeight()) {
         console.log('触底')
       }
-    },false)
-</script>
+    }, false)
+  </script>
 </body>
+
 </html>
